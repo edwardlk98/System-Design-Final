@@ -27,7 +27,6 @@ public class HospitalController {
 
     @PostConstruct
     public void init() {
-        // Initialize doctors
         doctors.add(new Doctor(1, "Dr. Maya Patel", "Cardiology", "Heart care specialist with 12 years of experience."));
         doctors.add(new Doctor(2, "Dr. Kevin Thompson", "Neurology", "Expert in brain and nervous system treatment."));
         doctors.add(new Doctor(3, "Dr. Aisha Rahman", "Pediatrics", "Child health doctor with a caring bedside manner."));
@@ -37,7 +36,7 @@ public class HospitalController {
         // Create doctor user accounts
         users.put("edward", new User("edward", "Dr. Maya Patel", "test", "doctor"));
 
-        // Create admin account
+        
         users.put("admin", new User("admin", "Hospital Admin", "admin123", "admin"));
     }
 
@@ -147,7 +146,7 @@ public class HospitalController {
         public String username;
         public String fullName;
         public String password;
-        public String userType; // "patient", "doctor", "admin"
+        public String userType; 
 
         public User(String username, String fullName, String password) {
             this.username = username;
