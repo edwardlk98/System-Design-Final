@@ -1,0 +1,660 @@
+:host {
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #f5f1e6;
+  background: linear-gradient(135deg, #081426 0%, #0f2347 100%);
+  min-height: 100vh;
+  display: block;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.page-shell {
+  width: 100%;
+  min-height: 100vh;
+  background: rgba(5, 13, 32, 0.92);
+  backdrop-filter: blur(12px);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  background: rgba(5, 13, 32, 0.92);
+  border-bottom: 1px solid rgba(74, 110, 177, 0.18);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+}
+
+.brand {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #eae1c7;
+  background: linear-gradient(135deg, #f5f1e6 0%, #f5f1e6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.nav button {
+  border: none;
+  background: transparent;
+  padding: 0.75rem 1rem;
+  color: #d8c69a;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.nav button.active,
+.nav button:hover {
+  background: rgba(245, 241, 230, 0.12);
+  color: #f5f1e6;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.user-chip {
+  background: rgba(245, 241, 230, 0.12);
+  color: #f5f1e6;
+  padding: 0.5rem 0.9rem;
+  border-radius: 2rem;
+  font-weight: 500;
+}
+
+.signout {
+  border: 1px solid rgba(245, 241, 230, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+  color: #f5f1e6;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.signout:hover {
+  background: rgba(245, 241, 230, 0.14);
+  border-color: rgba(245, 241, 230, 0.4);
+}
+
+.content {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero-section,
+.about-section,
+.auth-section,
+.appointment-section,
+.doctor-dashboard {
+  background: linear-gradient(135deg, rgba(4, 16, 38, 0.95) 0%, rgba(8, 29, 55, 0.98) 100%);
+  border: 1px solid rgba(74, 110, 177, 0.18);
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+  margin-bottom: 2rem;
+}
+
+.hero-section {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(20, 18, 15, 0.96) 0%, rgba(10, 9, 7, 0.98) 100%);
+}
+
+.hero-copy .eyebrow {
+  display: inline-block;
+  color: #f5f1e6;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.875rem;
+}
+
+.hero-copy h1 {
+  margin: 0;
+  font-size: clamp(2rem, 3.5vw, 3.5rem);
+  line-height: 1.1;
+  color: #f5f1e6;
+  font-weight: 700;
+}
+
+.hero-copy .hero-text {
+  margin: 1.25rem 0;
+  color: #d8c69a;
+  max-width: 34rem;
+  line-height: 1.6;
+  font-size: 1.1rem;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.welcome-message p {
+  margin: 0 0 1rem 0;
+  color: #1f2937;
+  font-weight: 600;
+}
+
+button.primary,
+button.secondary {
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.95rem 1.6rem;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+button.primary {
+  background: linear-gradient(135deg, #f5f1e6 0%, #f5f1e6 100%);
+  color: #080705;
+  box-shadow: 0 4px 20px rgba(245, 241, 230, 0.25);
+}
+
+button.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(245, 241, 230, 0.35);
+}
+
+button.secondary {
+  background: rgba(255, 238, 169, 0.08);
+  color: #f5f1e6;
+  border: 2px solid rgba(245, 241, 230, 0.35);
+}
+
+button.secondary:hover {
+  background: rgba(245, 241, 230, 0.15);
+  color: #f5f1e6;
+}
+
+.hero-panel {
+  display: flex;
+  justify-content: center;
+}
+
+.panel-card {
+  border-radius: 1rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(12, 34, 65, 0.85) 0%, rgba(5, 15, 36, 0.95) 100%);
+  min-height: 100%;
+  border: 1px solid rgba(74, 110, 177, 0.18);
+}
+
+.panel-card h2 {
+  margin-top: 0;
+  color: #dceeff;
+}
+
+.panel-card ul {
+  padding-left: 1.25rem;
+  margin-top: 1rem;
+  color: #c8daee;
+}
+
+.panel-card li {
+  margin-bottom: 0.75rem;
+}
+
+.auth-card,
+.booking-card,
+.welcome-box,
+.doctor-card,
+.info-box {
+  background: rgba(8, 20, 47, 0.9);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(74, 110, 177, 0.18);
+}
+
+.auth-switch {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.auth-switch button {
+  flex: 1;
+  border: 1px solid rgba(245, 241, 230, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  color: #f5f1e6;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.auth-switch button.active {
+  background: #f5f1e6;
+  color: #080705;
+  border-color: #f5f1e6;
+}
+
+.auth-card h2,
+.booking-card h3,
+.welcome-box h3 {
+  margin-top: 0;
+  color: #f5f1e6;
+}
+
+.auth-card label,
+.booking-card label {
+  display: block;
+  margin-bottom: 1rem;
+  color: #d8c69a;
+  font-weight: 500;
+}
+
+.booking-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  z-index: 50;
+}
+
+.booking-card.booking-modal {
+  position: relative;
+  max-width: 460px;
+  width: 100%;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 30px 80px rgba(23, 84, 182, 0.2);
+  background: rgba(8, 20, 47, 0.95);
+  border: 1px solid rgba(74, 110, 177, 0.25);
+}
+
+.close-modal {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  border: none;
+  background: transparent;
+  color: #b0b0a0;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.auth-card input,
+.booking-card input {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #3f392b;
+  background: #13110d;
+  color: #f5f1e6;
+  font-size: 1rem;
+}
+
+.auth-card input:focus,
+.booking-card input:focus {
+  outline: none;
+  border-color: #f5f1e6;
+  box-shadow: 0 0 0 3px rgba(245, 241, 230, 0.12);
+}
+
+.auth-card .message,
+.appointment-section .message {
+  margin: 1rem 0;
+  padding: 1rem 1.1rem;
+  border-radius: 0.5rem;
+}
+
+.message.error {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+.message.success {
+  background: #f0fdf4;
+  color: #16a34a;
+  border: 1px solid #bbf7d0;
+}
+
+.appointment-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.doctors-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.doctor-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+}
+
+.doctor-card:hover {
+  border-color: #85b4ff;
+  box-shadow: 0 4px 18px rgba(59, 130, 246, 0.22);
+}
+
+.doctor-card.selected {
+  border-color: #85b4ff;
+  background: rgba(33, 79, 138, 0.18);
+  box-shadow: 0 4px 18px rgba(59, 130, 246, 0.25);
+}
+
+.doctor-card strong {
+  color: #9ec8ff;
+  font-weight: 600;
+}
+
+.doctor-card h3 {
+  margin: 0;
+  color: #e2f2ff;
+}
+
+.doctor-card p {
+  color: #b8c9e1;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.welcome-box {
+  border: 1px solid rgba(74, 110, 177, 0.16);
+  background: linear-gradient(135deg, rgba(69, 108, 174, 0.08) 0%, rgba(8, 16, 33, 0.1) 100%);
+}
+
+.info-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.info-box p {
+  margin: 0;
+}
+
+.appointment-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.upcoming-appointments {
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(69, 108, 174, 0.08) 0%, rgba(17, 37, 65, 0.08) 100%);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(74, 110, 177, 0.16);
+}
+
+.upcoming-appointments h3 {
+  margin-top: 0;
+  color: #f5f1e6;
+}
+
+.appointments-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.appointment-item {
+  background: rgba(8, 20, 47, 0.9);
+  padding: 1.25rem;
+  border-radius: 0.5rem;
+  border-left: 4px solid #85b4ff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+
+.appointment-info {
+  flex: 1;
+}
+
+.appointment-info strong {
+  display: block;
+  color: #f5f1e6;
+  margin-bottom: 0.25rem;
+}
+
+.appointment-info p {
+  margin: 0.25rem 0;
+  color: #b0b0a0;
+  font-size: 0.95rem;
+}
+
+.appointment-time {
+  font-weight: 600;
+  color: #f5f1e6;
+  margin-top: 0.5rem !important;
+}
+
+.doctor-dashboard {
+  background: linear-gradient(135deg, rgba(4, 16, 38, 0.95) 0%, rgba(8, 29, 55, 0.98) 100%);
+  border: 1px solid rgba(74, 110, 177, 0.18);
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+}
+
+.dashboard-header {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid rgba(245, 241, 230, 0.12);
+  padding-bottom: 1.5rem;
+}
+
+.dashboard-header h2 {
+  margin-top: 0;
+  color: #f5f1e6;
+}
+
+.dashboard-header p {
+  color: #b0b0a0;
+  margin: 0;
+}
+
+.dashboard-content {
+  display: grid;
+  gap: 2rem;
+}
+
+.availability-section {
+  background: rgba(8, 18, 37, 0.85);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(74, 110, 177, 0.16);
+}
+
+.availability-section h3 {
+  margin-top: 0;
+  color: #f5f1e6;
+}
+
+.availability-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+  background: rgba(8, 18, 37, 0.8);
+  border-radius: 0.5rem;
+  border: 1px solid rgba(74, 110, 177, 0.16);
+}
+
+.availability-form label {
+  display: flex;
+  flex-direction: column;
+  color: #d8c69a;
+  font-weight: 500;
+}
+
+.availability-form input {
+  margin-top: 0.5rem;
+  padding: 0.75rem 0.875rem;
+  border: 1px solid rgba(245, 241, 230, 0.15);
+  border-radius: 0.5rem;
+  background: rgba(10, 10, 10, 0.8);
+  color: #f5f1e6;
+  font-size: 0.95rem;
+}
+
+.availability-form input:focus {
+  outline: none;
+  border-color: #f5f1e6;
+  box-shadow: 0 0 0 3px rgba(245, 241, 230, 0.12);
+}
+
+.checkbox-label {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.checkbox-label input {
+  margin-top: 0;
+  width: auto;
+  cursor: pointer;
+}
+
+.availability-list {
+  background: rgba(8, 18, 37, 0.85);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(74, 110, 177, 0.16);
+  margin-top: 1.5rem;
+}
+
+.availability-list h4 {
+  margin-top: 0;
+  color: #f5f1e6;
+}
+
+.availability-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: rgba(12, 30, 56, 0.88);
+  border-radius: 0.5rem;
+  margin-bottom: 0.75rem;
+  border-left: 3px solid #85b4ff;
+}
+
+.slot-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+}
+
+.slot-info strong {
+  color: #f5f1e6;
+}
+
+.slot-info span {
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.slot-info span.available {
+  background: rgba(245, 241, 230, 0.25);
+  color: #f5f1e6;
+}
+
+.slot-info span.unavailable {
+  background: rgba(107, 114, 128, 0.15);
+  color: #b0b0a0;
+}
+
+.availability-item .danger {
+  border: none;
+  background: rgba(220, 38, 38, 0.2);
+  color: #fca5a5;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.no-slots {
+  padding: 2rem;
+  text-align: center;
+  color: #c8d8f0;
+  background: rgba(8, 17, 34, 0.8);
+  border-radius: 0.5rem;
+  border: 1px dashed rgba(74, 110, 177, 0.18);
+}
+
+@media (max-width: 1024px) {
+  .hero-section,
+  .appointment-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .nav {
+    justify-content: center;
+  }
+
+  .auth-card,
+  .booking-card,
+  .welcome-box,
+  .doctor-card,
+  .info-box {
+    padding: 1.25rem;
+  }
+
+  .hero-section {
+    padding: 1.5rem;
+  }
+
+  .content {
+    padding: 1rem;
+  }
+
+  .hero-copy h1 {
+    font-size: 2.5rem;
+  }
+}
