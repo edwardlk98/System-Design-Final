@@ -1,0 +1,220 @@
+<div class="page-shell">
+  <header class="header">
+    <div class="brand">HospitalCare</div>
+    <nav class="nav">
+      <button [class.active]="activeSection === 'home'" (click)="selectSection('home')">Home</button>
+      <button [class.active]="activeSection === 'about'" (click)="selectSection('about')">About</button>
+      <button *ngIf="!user" [class.active]="activeSection === 'signin'" (click)="selectSection('signin')">Sign In</button>
+      <button *ngIf="!user" [class.active]="activeSection === 'appointments'" (click)="selectSection('appointments')">Appointments</button>
+      <button *ngIf="user && user.userType === 'patient'" [class.active]="activeSection === 'appointments'" (click)="selectSection('appointments')">Appointments</button>
+      <button *ngIf="user && user.userType === 'doctor'" [class.active]="activeSection === 'doctor-dashboard'" (click)="selectSection('doctor-dashboard')">Doctor Dashboard</button>
+    </nav>
+    <div class="header-actions">
+      <span *ngIf="user" class="user-chip">{{ user.userType === 'doctor' ? 'Dr. ' : '' }}{{ user.fullName }}</span>
+      <button *ngIf="user" class="signout" (click)="signOut()">Sign Out</button>
+    </div>
+  </header>
+
+  <main class="content">
+    <section *ngIf="activeSection === 'home'" class="hero-section">
+      <div class="hero-copy">
+        <p class="eyebrow">24/7 Care, fast booking</p>
+        <h1>Book appointments with top doctors in seconds.</h1>
+        <p class="hero-text">Our hospital portal makes it easy to sign up, sign in, and choose a doctor from five departments.</p>
+        <div class="hero-actions">
+          <button *ngIf="!user" class="primary" (click)="selectSection('signin'); toggleSignMode(false)">Sign In</button>
+          <button *ngIf="!user" class="secondary" (click)="selectSection('signin'); toggleSignMode(true)">Sign Up</button>
+          <div *ngIf="user" class="welcome-message">
+            <p>Welcome back, {{ user.fullName }}!</p>
+            <button class="primary" (click)="selectSection(user.userType === 'doctor' ? 'doctor-dashboard' : 'appointments')">Continue</button>
+          </div>
+        </div>
+      </div>
+      <div class="hero-panel">
+        <div class="panel-card">
+          <h2>Easy appointment workflow</h2>
+          <p>Sign up, choose your specialist, book your date and time, then receive confirmation immediately.</p>
+          <ul>
+            <li>Cardiology</li>
+            <li>Neurology</li>
+            <li>Pediatrics</li>
+            <li>Orthopedics</li>
+            <li>Dermatology</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section *ngIf="activeSection === 'about'" class="about-section">
+      <div class="info-card">
+        <h2>HospitalCare patient portal</h2><br>
+        <p>HospitalCare is a full-stack hospital appointment interface built with Angular on the front end and Spring Boot on the backend. It supports user signup, login, and appointment scheduling with specialist doctors in five departments.</p><br>
+        <div class="stats-grid">
+          <div>
+            <strong>5 </strong>
+            <span>Departments</span><br><br>
+          </div>
+          <div>
+            <strong>5 </strong>
+            <span>Doctors</span><br><br>
+          </div>
+          <div>
+            <strong>1 </strong>
+            <span>Booking flow</span><br>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section *ngIf="activeSection === 'signin'" class="auth-section">
+      <div class="auth-card">
+        <div class="auth-switch">
+          <button [class.active]="!showSignUp" (click)="toggleSignMode(false)">Sign In</button>
+          <button [class.active]="showSignUp" (click)="toggleSignMode(true)">Sign Up</button>
+        </div>
+        <h2>{{ showSignUp ? 'Create your account' : 'Sign in to HospitalCare' }}</h2>
+        <form (submit)="showSignUp ? signUpUser() : signInUser(); $event.preventDefault();">
+          <label *ngIf="showSignUp">
+            Full name
+            <input type="text" [(ngModel)]="signUp.fullName" name="fullName" placeholder="Jane Doe" />
+          </label>
+          <label *ngIf="showSignUp">
+            Username
+            <input type="text" [(ngModel)]="signUp.username" name="signUpUsername" placeholder="username" />
+          </label>
+          <label *ngIf="!showSignUp">
+            Username
+            <input type="text" [(ngModel)]="signIn.username" name="signInUsername" placeholder="username" />
+          </label>
+          <label *ngIf="showSignUp">
+            Password
+            <input type="password" [(ngModel)]="signUp.password" name="signUpPassword" placeholder="Password" />
+          </label>
+          <label *ngIf="!showSignUp">
+            Password
+            <input type="password" [(ngModel)]="signIn.password" name="signInPassword" placeholder="Password" />
+          </label>
+          <div class="message success" *ngIf="successMessage">{{ successMessage }}</div>
+          <div class="message error" *ngIf="errorMessage">{{ errorMessage }}</div>
+          <button type="submit" class="primary">{{ showSignUp ? 'Sign Up' : 'Sign In' }}</button>
+        </form>
+      </div>
+    </section>
+
+    <section *ngIf="activeSection === 'appointments'" class="appointment-section">
+      <div class="appointment-top">
+        <div>
+          <h2>Doctor appointments</h2>
+          <p>Select a doctor and choose the best available appointment slot.</p>
+        </div>
+      </div>
+
+      <div *ngIf="errorMessage" class="message error">{{ errorMessage }}</div>
+      <div *ngIf="appointmentMessage" class="message success">{{ appointmentMessage }}</div>
+
+      <div *ngIf="!user" class="info-box">
+        <p>Please sign in to make an appointment.</p>
+        <button class="primary" (click)="selectSection('signin'); toggleSignMode(false)">Sign In</button>
+      </div>
+
+      <div *ngIf="user" class="appointment-grid">
+        <div class="welcome-box">
+          <h3>Welcome, {{ user.fullName }}!</h3>
+          <p>Choose one of our specialists and book a convenient date and time.</p>
+        </div>
+
+        <!-- Upcoming Appointments Section -->
+        <div *ngIf="userAppointments.length > 0" class="upcoming-appointments">
+          <h3>Your Upcoming Appointments</h3>
+          <div class="appointments-list">
+            <div *ngFor="let apt of userAppointments" class="appointment-item">
+              <div class="appointment-info">
+                <strong>{{ apt.doctorName }}</strong>
+                <p>{{ apt.department }}</p>
+                <p class="appointment-time">{{ apt.date }} at {{ apt.time }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="doctors-grid">
+          <article *ngFor="let doctor of doctors" class="doctor-card" [class.selected]="selectedDoctor?.id === doctor.id" (click)="selectDoctor(doctor)">
+            <div>
+              <strong>{{ doctor.department }}</strong>
+              <h3>{{ doctor.name }}</h3>
+              <p>{{ doctor.bio }}</p>
+            </div>
+          </article>
+        </div>
+
+        <div *ngIf="selectedDoctor" class="booking-overlay">
+          <div class="booking-card booking-modal">
+            <button class="close-modal" type="button" (click)="selectedDoctor = null">×</button>
+            <h3>Book with {{ selectedDoctor.name }}</h3>
+            <p>{{ selectedDoctor.department }} appointment</p>
+            <form (submit)="makeAppointment(); $event.preventDefault();">
+              <label>
+                Date
+                <input type="date" [(ngModel)]="appointment.date" name="appointmentDate" />
+              </label>
+              <label>
+                Time
+                <input type="time" [(ngModel)]="appointment.time" name="appointmentTime" />
+              </label>
+              <button type="submit" class="primary">Confirm Appointment</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section *ngIf="activeSection === 'doctor-dashboard'" class="doctor-dashboard">
+      <div class="dashboard-header">
+        <h2>Doctor Dashboard</h2>
+        <p>Manage your availability and view patient appointments</p>
+      </div>
+
+      <div *ngIf="errorMessage" class="message error">{{ errorMessage }}</div>
+      <div *ngIf="successMessage" class="message success">{{ successMessage }}</div>
+
+      <div class="dashboard-content">
+        <!-- Availability Management Section -->
+        <div class="availability-section">
+          <h3>Set Your Availability</h3>
+          <div class="availability-form">
+            <label>
+              Date
+              <input type="date" [(ngModel)]="newAvailability.date" name="availDate" />
+            </label>
+            <label>
+              Time
+              <input type="time" [(ngModel)]="newAvailability.time" name="availTime" />
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" [(ngModel)]="newAvailability.isAvailable" name="isAvailable" />
+              Available
+            </label>
+            <button class="primary" (click)="addAvailabilitySlot()">Add Slot</button>
+          </div>
+
+          <div *ngIf="availabilitySlots.length > 0" class="availability-list">
+            <h4>Scheduled Availability Slots</h4>
+            <div *ngFor="let slot of availabilitySlots; let i = index" class="availability-item">
+              <div class="slot-info">
+                <strong>{{ slot.date }} at {{ slot.time }}</strong>
+                <span [class.available]="slot.isAvailable" [class.unavailable]="!slot.isAvailable">
+                  {{ slot.isAvailable ? '✓ Available' : '✗ Unavailable' }}
+                </span>
+              </div>
+              <button class="danger" (click)="removeAvailabilitySlot(i)">Remove</button>
+            </div>
+            <button class="primary" (click)="saveAvailability()">Save Availability</button>
+          </div>
+          <div *ngIf="availabilitySlots.length === 0" class="no-slots">
+            <p>No availability slots scheduled yet. Add one above.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
